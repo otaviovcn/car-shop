@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import { Model } from 'mongoose';
 import ICar from '../../../src/Interfaces/ICar';
 import CarService from '../../../src/Services/Car.service';
+// import CarModel from '../../../src/Models/Car.model';
 
 describe('Verifica a rota de carros', function () {
   describe('Testa a rota POST /cars', function () {
@@ -133,6 +134,58 @@ describe('Verifica a rota de carros', function () {
       expect(result.message).to.be.equal('Car not found');
     });
   });
+
+  // describe('Testa a rota PUT /cars:id', function () {
+  //   it(`Testa se a rota retorna, com sucesso, 
+  //   a atualização do carro escolhido.`, async function () {
+  //     const modelOutput = {
+  //       acknowledged: true,
+  //       matchedCount: 1,
+  //       modifiedCount: 1,
+  //       upsertedCount: 0,
+  //       upsertedId: 1,
+  //     };
+
+  //     const serviceInput = {
+  //       model: 'Marea',
+  //       year: 2002,
+  //       color: 'Black',
+  //       status: true,
+  //       buyValue: 15.99,
+  //       doorsQty: 4,
+  //       seatsQty: 5,
+  //     };
+
+  //     const serviceOutput = {
+  //       id: '634852326b35b59438fbea2f',
+  //       model: 'Marea',
+  //       year: 1992,
+  //       color: 'Red',
+  //       status: true,
+  //       buyValue: 12.000,
+  //       doorsQty: 2,
+  //       seatsQty: 5,
+  //     };
+  //     sinon.stub(Model, 'findById').resolves(true);
+  //     // const model = new CarModel();
+  //     sinon.stub(Model, 'updateOne').resolves(modelOutput);
+      
+  //     const service = new CarService();
+  //     const result = await service.update('634852326b35b59438fbea2f', serviceInput);
+
+  //     expect(result.message).to.be.deep.equal(serviceOutput);
+  //     expect(result.type).to.be.equal(200);
+  //   });
+
+  //   // it('Testa se, ao procurar um carro inexistente, a rota trás uma excessão', async function () {
+  //   //   sinon.stub(Model, 'findById').resolves(null);
+
+  //   //   const service = new CarService();
+  //   //   const result = await service.getById('1234567891011121314');
+
+  //   //   expect(result.message).to.be.equal('Car not found');
+  //   // });
+  // });
 
   afterEach(function () {
     sinon.restore();

@@ -57,6 +57,30 @@ class CarController {
       this.next(error);
     }
   }
+
+  public async update() {
+    const { id } = this.req.params;
+    const car: ICar = {
+      model: this.req.body.model,
+      year: this.req.body.year,
+      color: this.req.body.color,
+      buyValue: this.req.body.buyValue,
+      doorsQty: this.req.body.doorsQty,
+      seatsQty: this.req.body.seatsQty,
+      status: this.req.body.status ? this.req.body.status : false,
+    };
+
+    try {
+      const { type, message } = await this.service.update(id, car);
+      if (type === 200) {
+        return this.res.status(type).json(message);
+      }
+
+      return this.res.status(type).json({ message });
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }
 
 export default CarController;

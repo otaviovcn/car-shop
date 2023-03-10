@@ -35,6 +35,19 @@ class CarModel {
   public async getAll(): Promise<ICar[]> {
     return this.model.find();
   }
+
+  public async update(id: string, car: ICar) {
+    return this.model.updateOne({ _id: id }, { id, ...car });
+
+    // const response = {
+    //   acknowledged: result.acknowledged,
+    //   matchedCount: result.matchedCount,
+    //   modifiedCount: result.modifiedCount,
+    //   upsertedCount: result.upsertedCount,
+    // };
+
+    // return response;
+  }
 }
 
 export default CarModel;
