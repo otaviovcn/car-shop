@@ -64,6 +64,20 @@ describe('Verifica a rota de motocicletas', function () {
       expect(result.type).to.be.equal(404);
     });
   });
+  describe('Testa a rota PUT /motorcycles:id', function () {
+    it('Testa se a rota atualiza, com sucesso, a motocicleta escolhido.', async function () {
+      const serviceInput = ONE_MOTORCYCLE_INPUT_MOCK;
+      const serviceOutput = 'Motorcycle not found';
+
+      const service = new MotorcycleService();
+      sinon.stub(Model, 'findById').resolves(null);
+
+      const result = await service.update('634852326b35b59438fbea2f', serviceInput);
+
+      expect(result.message).to.be.deep.equal(serviceOutput);
+      expect(result.type).to.be.equal(404);
+    });
+  });
 
   afterEach(function () {
     sinon.restore();
