@@ -3,30 +3,20 @@ import sinon from 'sinon';
 import { Model } from 'mongoose';
 import IMotorcycle from '../../../src/Interfaces/IMotorcycle';
 import MotorcycleService from '../../../src/Services/Motorcycle.service';
+import {
+  MOTORCYCLE_LIST_MODEL_OUTPUT_MOCK,
+  MOTORCYCLE_LIST_SERVICE_OUTPUT_MOCK,
+  ONE_MOTORCYCLE_INPUT_MOCK,
+  ONE_MOTORCYCLE_MODEL_OUTPUT_MOCK,
+  ONE_MOTORCYCLE_SERVICE_OUTPUT_MOCK,
+} from './Mocks/motorcycle.mock.test';
 
 describe('Verifica a rota de motocicletas', function () {
   describe('Testa a rota POST /motorcycles', function () {
-    it('Testa se a rota consegue adicionar um motocicleta com sucesso.', async function () {
-      const motorcycleInput: IMotorcycle = {
-        model: 'Honda Cb 600f Hornet',
-        year: 2005,
-        color: 'Yellow',
-        status: true,
-        buyValue: 30.000,
-        category: 'Street',
-        engineCapacity: 600,
-      };
+    it('Testa se a rota consegue adicionar uma motocicleta com sucesso.', async function () {
+      const motorcycleInput: IMotorcycle = ONE_MOTORCYCLE_INPUT_MOCK;
 
-      const motorcycleOutput = {
-        id: '6348513f34c397abcad040b2',
-        model: 'Honda Cb 600f Hornet',
-        year: 2005,
-        color: 'Yellow',
-        status: true,
-        buyValue: 30.000,
-        category: 'Street',
-        engineCapacity: 600,
-      };
+      const motorcycleOutput = ONE_MOTORCYCLE_SERVICE_OUTPUT_MOCK;
       sinon.stub(Model, 'create').resolves(motorcycleOutput);
 
       const service = new MotorcycleService();
@@ -37,102 +27,43 @@ describe('Verifica a rota de motocicletas', function () {
     });
   });
 
-  // describe('Testa a rota GET /cars', function () {
-  //   it('Testa se a rota retorna a lista com todos os carros.', async function () {
-  //     const modelOutput = [
-  //       {
-  //         _id: '634852326b35b59438fbea2f',
-  //         model: 'Marea',
-  //         year: 2002,
-  //         color: 'Black',
-  //         status: true,
-  //         buyValue: 15.99,
-  //         doorsQty: 4,
-  //         seatsQty: 5,
-  //       },
-  //       {
-  //         _id: '634852326b35b59438fbea31',
-  //         model: 'Tempra',
-  //         year: 1995,
-  //         color: 'Black',
-  //         status: false,
-  //         buyValue: 39,
-  //         doorsQty: 2,
-  //         seatsQty: 5,
-  //       },
-  //     ];
-  //     const serviceOutput = [
-  //       {
-  //         id: '634852326b35b59438fbea2f',
-  //         model: 'Marea',
-  //         year: 2002,
-  //         color: 'Black',
-  //         status: true,
-  //         buyValue: 15.99,
-  //         doorsQty: 4,
-  //         seatsQty: 5,
-  //       },
-  //       {
-  //         id: '634852326b35b59438fbea31',
-  //         model: 'Tempra',
-  //         year: 1995,
-  //         color: 'Black',
-  //         status: false,
-  //         buyValue: 39,
-  //         doorsQty: 2,
-  //         seatsQty: 5,
-  //       },
-  //     ];
-  //     sinon.stub(Model, 'find').resolves(modelOutput);
+  describe('Testa a rota GET /motorcycles', function () {
+    it('Testa se a rota retorna a lista com todas as motocicletas.', async function () {
+      const modelOutput = MOTORCYCLE_LIST_MODEL_OUTPUT_MOCK;
+      const serviceOutput = MOTORCYCLE_LIST_SERVICE_OUTPUT_MOCK;
+      sinon.stub(Model, 'find').resolves(modelOutput);
 
-  //     const service = new CarService();
-  //     const result = await service.getAll();
+      const service = new MotorcycleService();
+      const result = await service.getAll();
 
-  //     expect(result.message).to.be.deep.equal(serviceOutput);
-  //     expect(result.type).to.be.equal(200);
-  //   });
-  // });
-  // describe('Testa a rota GET /cars:id', function () {
-  //   it('Testa se a rota retorna, com sucesso, o carro escolhido.', async function () {
-  //     const modelOutput = {
-  //       _id: '634852326b35b59438fbea2f',
-  //       model: 'Marea',
-  //       year: 2002,
-  //       color: 'Black',
-  //       status: true,
-  //       buyValue: 15.99,
-  //       doorsQty: 4,
-  //       seatsQty: 5,
-  //     };
-  //     const serviceOutput = {
-  //       id: '634852326b35b59438fbea2f',
-  //       model: 'Marea',
-  //       year: 2002,
-  //       color: 'Black',
-  //       status: true,
-  //       buyValue: 15.99,
-  //       doorsQty: 4,
-  //       seatsQty: 5,
-  //     };
+      expect(result.message).to.be.deep.equal(serviceOutput);
+      expect(result.type).to.be.equal(200);
+    });
+  });
+  describe('Testa a rota GET /motorcycles:id', function () {
+    it('Testa se a rota retorna, com sucesso, a motocicleta escolhida.', async function () {
+      const modelOutput = ONE_MOTORCYCLE_MODEL_OUTPUT_MOCK;
+      const serviceOutput = ONE_MOTORCYCLE_SERVICE_OUTPUT_MOCK;
 
-  //     sinon.stub(Model, 'findById').resolves(modelOutput);
+      sinon.stub(Model, 'findById').resolves(modelOutput);
 
-  //     const service = new CarService();
-  //     const result = await service.getById('634852326b35b59438fbea2f');
+      const service = new MotorcycleService();
+      const result = await service.getById('6348513f34c397abcad040b2');
 
-  //     expect(result.message).to.be.deep.equal(serviceOutput);
-  //     expect(result.type).to.be.equal(200);
-  //   });
+      expect(result.message).to.be.deep.equal(serviceOutput);
+      expect(result.type).to.be.equal(200);
+    });
 
-  //   it('Testa se, ao procurar um carro inexistente, a rota trás uma excessão', async function () {
-  //     sinon.stub(Model, 'findById').resolves(null);
+    it('Testa se, ao procurar uma moto inexistente, a rota trás uma excessão', async function () {
+      sinon.stub(Model, 'findById').resolves(null);
 
-  //     const service = new CarService();
-  //     const result = await service.getById('1234567891011121314');
+      const service = new MotorcycleService();
+      const result = await service.getById('1234567891011121314');
 
-  //     expect(result.message).to.be.equal('Car not found');
-  //   });
-  // });
+      expect(result.message).to.be.equal('Motorcycle not found');
+      expect(result.type).to.be.equal(404);
+    });
+  });
 
   afterEach(function () {
     sinon.restore();

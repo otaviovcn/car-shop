@@ -57,6 +57,30 @@ class MotorcycleController {
       this.next(error);
     }
   }
+
+  public async update() {
+    const { id } = this.req.params;
+    const motorcycle: IMotorcycle = {
+      model: this.req.body.model,
+      year: this.req.body.year,
+      color: this.req.body.color,
+      buyValue: this.req.body.buyValue,
+      engineCapacity: this.req.body.engineCapacity,
+      category: this.req.body.category,
+      status: this.req.body.status ? this.req.body.status : false,
+    };
+
+    try {
+      const { type, message } = await this.service.update(id, motorcycle);
+      if (type === 200) {
+        return this.res.status(type).json(message);
+      }
+
+      return this.res.status(type).json({ message });
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }
 
 export default MotorcycleController;

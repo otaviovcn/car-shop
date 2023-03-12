@@ -11,5 +11,6 @@ routes.get(
   verifyId,
   (req, res, next) => new MotorcycleController(req, res, next).getById(),
 );
+routes.put('/:id', verifyId, (req, res, next) => new MotorcycleController(req, res, next).update());
 
 export default routes;

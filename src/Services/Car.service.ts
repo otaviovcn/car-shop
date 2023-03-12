@@ -3,7 +3,6 @@ import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarModel from '../Models/Car.model';
 import statusCode from '../utils/statusCode';
-// import IUpdateResult from '../Interfaces/IUpdateResult';
 
 class CarService {
   public async create(car: ICar) {

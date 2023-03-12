@@ -51,6 +51,22 @@ class MotorcycleService {
 
     return { type: statusCode.HTTP_OK, message: motorcycleFound };
   }
+
+  public async update(id: string, motorcycle: IMotorcycle): Promise<IResponseDefault<IMotorcycle>> {
+    const motorcycleModel = new MotorcycleModel();
+    const motorcyclefound = await motorcycleModel.getById(id);
+
+    if (!motorcyclefound) {
+      return { type: statusCode.HTTP_NOT_FOUND, message: 'Motorcycle not found' };
+    }
+    
+    const motorcycleUpdated = await motorcycleModel.update(id, motorcycle);
+    if (motorcycleUpdated.modifiedCount === 1) {
+      return { type: statusCode.HTTP_OK, message: { id, ...motorcycle } };
+    }
+
+    return { type: statusCode.HTTP_INTERNAL_SERVER_ERROR, message: 'Internal Server Error' };
+  }
 }
 
 export default MotorcycleService;

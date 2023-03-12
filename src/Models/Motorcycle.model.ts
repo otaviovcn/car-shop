@@ -29,6 +29,10 @@ class MotorcycleModel {
     const result = await this.model.findById(id);
     return result;
   }
+
+  public async update(id: string, motorcycle: IMotorcycle) {
+    return this.model.updateOne({ _id: id }, { id, ...motorcycle });
+  }
 }
 
 export default MotorcycleModel;
