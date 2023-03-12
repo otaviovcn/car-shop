@@ -20,6 +20,15 @@ class MotorcycleModel {
   public async create(motorcycle: IMotorcycle): Promise<IMotorcycle> {
     return this.model.create({ ...motorcycle });
   }
+
+  public async getAll(): Promise<IMotorcycle[]> {
+    return this.model.find();
+  }
+
+  public async getById(id: string): Promise<IMotorcycle | null> {
+    const result = await this.model.findById(id);
+    return result;
+  }
 }
 
 export default MotorcycleModel;
